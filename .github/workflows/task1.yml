@@ -1,16 +1,25 @@
+name: Python Lint
+
 on:
   push:
     branches:
-      - main
-job:
+      - master
+
+jobs:
   build:
-    runs_on: ubuntu-latest
-  steps:
-    - name: Check out source repository
-      uses: actions/checkout@v3
-    - name: Set up Python environment
-      uses: actions/setup-python@v4
-      with:
-        python-version: "3.11"
-    - name: flake8 Lint
-      uses: py-actions/flake8@v2
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out source repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python environment
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install flake8
+        run: pip install flake8
+
+      - name: Run flake8
+        run: flake8 .
