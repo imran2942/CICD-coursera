@@ -23,3 +23,11 @@ jobs:
 
       - name: Run flake8
         run: flake8 .
+
+      - name: Install dependencies
+        run: |
+          pip install nose
+          pip install -r requirements.txt || true  # Optional if you use it
+
+      - name: Run Nose tests
+        run: nosetests
