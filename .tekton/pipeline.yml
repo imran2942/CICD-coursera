@@ -1,0 +1,31 @@
+---
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: example-pipeline
+spec:
+  workspaces:
+    - name: shared-workspace
+  params:
+    - name: test-args
+      type: string
+      default: "-v"
+  tasks:
+    - name: run-tests
+      taskRef:
+        name: nose
+      workspaces:
+        - name: source
+          workspace: shared-workspace
+      params:
+        - name: args
+          value: $(params.test-args)
+
+    - name: clean-workspace
+      runAfter:
+        - run-tests
+      taskRef:
+        name: cleanup
+      workspaces:
+        - name: source
+          workspace: shared-workspace
